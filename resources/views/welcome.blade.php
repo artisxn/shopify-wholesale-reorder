@@ -1,20 +1,16 @@
 @extends('layouts.default')
 
 @section('content')
-    <p>You are: {{ ShopifyApp::shop()->shopify_domain }}</p>
+    <div id="app"></div>
 @endsection
 
 @section('scripts')
     @parent
 
-    <script type="text/javascript">
-        // ESDK page and bar title
-        window.mainPageTitle = 'Welcome Page';
-        ShopifyApp.ready(function() {
-            ShopifyApp.Bar.initialize({
-                title: 'Welcome',
+    <script src="{{ mix('js/app.js') }}"></script>
 
-            })
-        });
+    <script type="text/javascript">
+        // Bar title
+        window.mainPageTitle = 'Welcome Page';
     </script>
 @endsection
