@@ -15,3 +15,4 @@ use Illuminate\Http\Request;
 
 Route::get('customers', 'CustomerController@search');
 Route::get('customers/{customer_id}/orders', 'CustomerController@orders');
+Route::post('customers/{customer_id}/orders', 'CustomerController@placeOrder');

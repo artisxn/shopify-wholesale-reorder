@@ -4,7 +4,6 @@ import {
     Page,
     Card,
     ResourceList,
-    TextContainer,
     TextStyle,
     Avatar,
     Select,
@@ -31,6 +30,9 @@ export default class Reorder extends React.Component {
         errors: {},
         inputText: '',
         totalItems: 0,
+        totalCost: 0.0,
+        orderId: null,
+        orderSaving: false,
     };
 
     dateRangeChanged = (newRange) => {
@@ -70,9 +72,13 @@ export default class Reorder extends React.Component {
                 break;
         }
         products[i] = product;
+
+        const price = parseFloat(product.price);
+
         this.setState({
             products,
-            totalItems: this.state.totalItems - prevValue + value
+            totalItems: this.state.totalItems - prevValue + value,
+            totalCost: this.state.totalCost - ( prevValue * price) + (value * price)
         });
     };
 
@@ -102,10 +108,15 @@ export default class Reorder extends React.Component {
                 {this.state.totalItems > 0 &&
                     <ContextualSaveBar
                         alignContentFlush
-                        message={this.state.totalItems + ' item(s) selected'}
+                        message={
+                            this.state.orderId === null
+                                ? this.state.totalItems + ' item(s). Total Cost: $' + this.state.totalCost
+                                : 'Order has been created as draft'
+                        }
                         saveAction={{
-                            content: 'Place Order',
-                            onAction: () => console.log('Order'),
+                            loading: this.state.orderSaving,
+                            content: this.state.orderId === null ? 'Place Order' : 'Open Order',
+                            onAction: this.state.orderId === null ? this.placeOrder : this.openOrder,
                         }}
                     />
                 }
@@ -232,6 +243,8 @@ export default class Reorder extends React.Component {
                         product.order = 0;
                         return product;
                     }),
+                    totalItems: 0,
+                    totalCost: 0.0
                 });
             })
             .catch(console.error)
@@ -239,5 +252,53 @@ export default class Reorder extends React.Component {
                 this.setState({ordersLoading: false});
             });
     };
+
+    placeOrder = () => {
+        let line_items = _.filter(this.state.products, (item) => {
+            return item.order > 0;
+        });
+
+        line_items = _.map(line_items, function(item) {
+            return {
+                variant_id: item.variant_id,
+                quantity: item.order
+            }
+        });
+
+        this.setState({orderSaving: true});
+
+        axios.post(`/api/customers/${this.state.customer}/orders`, {
+            items: line_items,
+            discount: 10,
+            cost: this.state.totalCost
+        })
+            .then(response => {
+                this.setState({
+                    orderId: response.data.id
+                });
+            })
+            .catch(console.error)
+            .finally(() => {
+                this.setState({orderSaving: false});
+            });
+
+    }
+
+    openOrder = () => {
+        let url = 'https://'+document.head.querySelector('meta[name="shopify-shop-origin"]').content + '/';
+        url = url + 'admin/draft_orders/' + this.state.orderId;
+
+        window.open(url, '_blank');
+
+        this.setState({
+            orderId: null,
+            selectedCustomerName: '',
+            products: [],
+            customer: {},
+            inputText: '',
+            totalItems: 0,
+            totalCost: 0.0,
+        });
+    }
 
 }

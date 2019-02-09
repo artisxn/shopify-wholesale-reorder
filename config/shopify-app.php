@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'api_scopes' => 'read_products,read_customers,read_orders,read_all_orders',
+    'api_scopes' => 'read_products,read_customers,read_orders,read_all_orders,write_orders,write_draft_orders,read_draft_orders',
 
     /*
     |--------------------------------------------------------------------------

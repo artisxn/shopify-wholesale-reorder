@@ -36,6 +36,7 @@ class CustomerController extends Controller
                 if(!isset($map[$line_item->product_id])) {
                     $map[$line_item->product_id] = [
                         'id' => $line_item->product_id,
+                        'variant_id' => $line_item->variant_id,
                         'title' => $line_item->title,
                         'sku' => $line_item->sku,
                         'image' => null,
@@ -55,7 +56,7 @@ class CustomerController extends Controller
         foreach($chunks as $chunk) {
             $p_request = $shop->api()->rest('GET', '/admin/products.json',[
                 'limit' => 250,
-                'fields' => 'id,images',
+                'fields' => 'id,images,variants',
                 'ids' => implode(',', $chunk->pluck('id')->toArray())
             ]);
 
@@ -63,15 +64,52 @@ class CustomerController extends Controller
             $products = $products->union($new_products->keyBy('id'));
         }
 
+
         $items->transform(function ($item) use ($products) {
             if(isset($products[$item['id']]) && isset($products[$item['id']]->images)) {
                 $item['image'] = $products[$item['id']]->images[0]->src;
+            }
+            if(isset($products[$item['id']]) && isset($products[$item['id']]->variants)) {
+                $item['price'] = $products[$item['id']]->variants[0]->price;
             }
 
             return $item;
         });
 
         return $items->values();
+
+    }
+
+    public function placeOrder($customer_id, Request $request)
+    {
+        $valid = $request->validate([
+            'discount' => 'required|numeric',
+            'cost' => 'required|numeric',
+            'items' => 'required|min:1',
+            'items.*.variant_id' => 'required|integer',
+            'items.*.quantity' => 'required|integer|min:1',
+        ]);
+
+
+        $shop = ShopifyApp::shop();
+        $s_request = $shop->api()->rest('POST', "/admin/draft_orders.json", [
+            'draft_order' => [
+                'line_items' => $valid['items'],
+                'customer' => [
+                    'id' => $customer_id
+                ],
+                'applied_discount' => [
+                    'description' => 'Discount for wholesale customer',
+                    'value_type' => 'percentage',
+                    'value' => $valid['discount'],
+                    'amount' => $valid['discount'] * $valid['cost'] / 100.0,
+                    'title' => 'Wholesale'
+                ],
+            ]
+        ]);
+
+        return json_encode($s_request->body->draft_order);
+
 
     }
 }
