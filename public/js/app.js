@@ -95905,7 +95905,8 @@ function (_React$Component) {
               sku = item.sku,
               quantity = item.quantity,
               stock = item.stock,
-              order = item.order;
+              order = item.order,
+              tags = item.tags;
           var media = !lodash__WEBPACK_IMPORTED_MODULE_3___default.a.has(item, 'image') ? null : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Avatar"], {
             size: "medium",
             source: image
@@ -95918,7 +95919,11 @@ function (_React$Component) {
             className: "ProductListItem__Title"
           }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextStyle"], {
             variation: "strong"
-          }, title)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          }, title), (lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'PhaseOut') || lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'Overstock')) && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Stack"], null, lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'PhaseOut') && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
+            status: "warning"
+          }, "PhaseOut"), lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'Overstock') && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
+            status: "warning"
+          }, "Overstock"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
             className: "ProductListItem__Sku"
           }, sku), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"].Group, {
             condensed: true

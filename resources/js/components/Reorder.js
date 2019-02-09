@@ -11,7 +11,9 @@ import {
     Icon,
     FormLayout,
     TextField,
-    ContextualSaveBar
+    ContextualSaveBar,
+    Stack,
+    Badge
 } from "@shopify/polaris";
 import React from "react";
 import axios from "axios";
@@ -149,7 +151,7 @@ export default class Reorder extends React.Component {
                         idForItem={(item, index) => index}
                         loading={this.state.ordersLoading}
                         renderItem={(item, index) => {
-                            const {id, title, image, sku, quantity, stock, order} = item;
+                            const {id, title, image, sku, quantity, stock, order, tags} = item;
                             const media = !_.has(item, 'image') ? null : <Avatar size="medium" source={image} />;
 
                             return (
@@ -158,7 +160,15 @@ export default class Reorder extends React.Component {
                                     media={media}
                                     accessibilityLabel={`View details for ${title}`}
                                 >
-                                    <h3 className="ProductListItem__Title"><TextStyle variation="strong">{title}</TextStyle></h3>
+                                    <h3 className="ProductListItem__Title">
+                                        <TextStyle variation="strong">{title}</TextStyle>
+                                        {(_.includes(tags, 'PhaseOut') || _.includes(tags, 'Overstock')) &&
+                                        <Stack>
+                                            {_.includes(tags, 'PhaseOut') && <Badge status="warning">PhaseOut</Badge>}
+                                            {_.includes(tags, 'Overstock') && <Badge status="warning">Overstock</Badge>}
+                                        </Stack>
+                                        }
+                                    </h3>
                                     <div className="ProductListItem__Sku">{sku}</div>
                                     <FormLayout>
                                         <FormLayout.Group condensed>

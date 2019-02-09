@@ -58,7 +58,7 @@ class CustomerController extends Controller
         foreach($chunks as $chunk) {
             $p_request = $shop->api()->rest('GET', '/admin/products.json',[
                 'limit' => 250,
-                'fields' => 'id,images,variants',
+                'fields' => 'id,images,variants,tags',
                 'ids' => implode(',', $chunk->pluck('id')->toArray())
             ]);
 
@@ -72,7 +72,10 @@ class CustomerController extends Controller
                 $item['image'] = $products[$item['id']]->images[0]->src;
             }
             if(isset($products[$item['id']]) && isset($products[$item['id']]->variants)) {
-                $item['price'] = $products[$item['id']]->variants[0]->price;
+	            $item['price'] = $products[ $item['id'] ]->variants[0]->price;
+            }
+            if(isset($products[$item['id']]) && isset($products[$item['id']]->tags)) {
+	            $item['tags'] = explode(', ', $products[ $item['id'] ]->tags);
             }
 
             return $item;
