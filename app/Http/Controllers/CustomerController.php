@@ -85,8 +85,6 @@ class CustomerController extends Controller
     public function placeOrder($customer_id, Request $request)
     {
         $valid = $request->validate([
-            'discount' => 'required|numeric',
-            'cost' => 'required|numeric',
             'items' => 'required|min:1',
             'items.*.variant_id' => 'required|integer',
             'items.*.quantity' => 'required|integer|min:1',
@@ -99,13 +97,6 @@ class CustomerController extends Controller
                 'line_items' => $valid['items'],
                 'customer' => [
                     'id' => $customer_id
-                ],
-                'applied_discount' => [
-                    'description' => 'Discount for wholesale customer',
-                    'value_type' => 'percentage',
-                    'value' => $valid['discount'],
-                    'amount' => $valid['discount'] * $valid['cost'] / 100.0,
-                    'title' => 'Wholesale'
                 ],
             ]
         ]);

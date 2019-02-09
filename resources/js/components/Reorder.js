@@ -273,8 +273,6 @@ export default class Reorder extends React.Component {
 
         axios.post(`/api/customers/${this.state.customer}/orders`, {
             items: line_items,
-            discount: 10,
-            cost: this.state.totalCost
         })
             .then(response => {
                 this.setState({

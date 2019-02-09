@@ -95799,9 +95799,7 @@ function (_React$Component) {
       });
 
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/customers/".concat(_this.state.customer, "/orders"), {
-        items: line_items,
-        discount: 10,
-        cost: _this.state.totalCost
+        items: line_items
       }).then(function (response) {
         _this.setState({
           orderId: response.data.id
