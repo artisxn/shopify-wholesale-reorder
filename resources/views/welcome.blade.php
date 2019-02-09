@@ -8,9 +8,4 @@
     @parent
 
     <script src="{{ mix('js/app.js') }}"></script>
-
-    <script type="text/javascript">
-        // Bar title
-        window.mainPageTitle = 'Welcome Page';
-    </script>
 @endsection

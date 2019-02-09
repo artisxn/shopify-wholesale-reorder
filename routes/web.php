@@ -13,4 +13,6 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth.shop'])->name('home');
+})
+    ->middleware(['auth.shop'])
+    ->name('home');

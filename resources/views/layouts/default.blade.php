@@ -8,19 +8,14 @@
     @if(config('app.env') == 'local')
         <meta name="app-debug" content="true">
     @endif
-
+    <link rel="stylesheet" href="https://sdks.shopifycdn.com/polaris/3.0.0/polaris.min.css" />
     <title>{{ config('shopify-app.app_name') }}</title>
 
     @yield('styles')
 </head>
 
 <body>
-<div class="app-wrapper">
-    <div class="app-content">
-        <main role="main">
-            @yield('content')
-        </main>
-    </div>
+    @yield('content')
 </div>
 
 @if(config('shopify-app.esdk_enabled'))

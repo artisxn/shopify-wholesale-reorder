@@ -95518,6 +95518,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/index.es.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Reorder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Reorder */ "./resources/js/components/Reorder.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -95539,10 +95540,11 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var apiKey = document.head.querySelector('meta[name="shopify-api-key"]').content;
 var shopOrigin = document.head.querySelector('meta[name="shopify-shop-origin"]').content;
 var forceRedirect = true;
-if (document.head.querySelector('meta[name="app-debug"]') !== null && document.head.querySelector('meta[name="app-debug"]').content !== 'true') forceRedirect = false;
+if (document.head.querySelector('meta[name="app-debug"]') !== null && document.head.querySelector('meta[name="app-debug"]').content === 'true') forceRedirect = false;
 
 var App =
 /*#__PURE__*/
@@ -95562,15 +95564,7 @@ function (_Component) {
         apiKey: apiKey,
         shopOrigin: shopOrigin,
         forceRedirect: forceRedirect
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_1__["Page"], {
-        title: "Example app"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-        sectioned: true
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-        onClick: function onClick() {
-          return alert('Button clicked!');
-        }
-      }, "Example button"))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Reorder__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     }
   }]);
 
@@ -95578,6 +95572,333 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+
+/***/ }),
+
+/***/ "./resources/js/components/Reorder.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/Reorder.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Reorder; });
+/* harmony import */ var _shopify_polaris__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shopify/polaris */ "./node_modules/@shopify/polaris/index.es.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var Reorder =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Reorder, _React$Component);
+
+  function Reorder() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Reorder);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Reorder)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
+      dateRange: '60',
+      customersLoading: false,
+      ordersLoading: false,
+      customers: {},
+      customerOptions: [],
+      selectedCustomerName: '',
+      products: [],
+      customer: {},
+      errors: {},
+      inputText: '',
+      totalItems: 0
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "dateRangeChanged", function (newRange) {
+      _this.setState({
+        dateRange: newRange
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "customerSelected", function (updatedSelection) {
+      var selectedOption = updatedSelection.map(function (selectedItem) {
+        var matchedOption = _this.state.customerOptions.filter(function (option) {
+          return option.value === selectedItem;
+        });
+
+        return matchedOption[0];
+      });
+
+      _this.setState({
+        selectedCustomerName: selectedOption[0].label,
+        inputText: selectedOption[0].label,
+        customer: selectedOption[0].value
+      }, function () {
+        _this.getOrders();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "updateProduct", function (i, property, value) {
+      var products = _toConsumableArray(_this.state.products);
+
+      var product = _objectSpread({}, products[i]);
+
+      var prevValue;
+      value = Math.max(parseInt(value), 0); // noinspection FallThroughInSwitchStatementJS If stock is updated also update order quantity
+
+      switch (property) {
+        case 'stock':
+          product.stock = value;
+          value = Math.max(0, product.quantity - value);
+
+        case 'order':
+          prevValue = product.order;
+          product.order = value;
+          break;
+      }
+
+      products[i] = product;
+
+      _this.setState({
+        products: products,
+        totalItems: _this.state.totalItems - prevValue + value
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "searchCustomers", function (newValue) {
+      _this.setState({
+        inputText: newValue,
+        customersLoading: true,
+        customerOptions: []
+      });
+
+      _this.filterAndUpdateOptions(newValue);
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "populateCustomers", function (customers) {
+      var customerOptions = Object.keys(customers).map(function (customer) {
+        return {
+          value: customers[customer].id,
+          id: customers[customer].id,
+          label: "".concat(customers[customer].first_name, " ").concat(customers[customer].last_name)
+        };
+      });
+
+      _this.setState(function (prevState) {
+        return {
+          customerOptions: customerOptions,
+          customers: customers
+        };
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "filterAndUpdateOptions", lodash__WEBPACK_IMPORTED_MODULE_3___default.a.debounce(function (inputString) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/customers', {
+        params: {
+          q: inputString
+        }
+      }).then(function (response) {
+        _this.populateCustomers(response.data);
+      }).catch(console.error).finally(function () {
+        _this.setState({
+          customersLoading: false
+        });
+      });
+    }, 400));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "getOrders", function () {
+      _this.setState({
+        ordersLoading: true
+      });
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/customers/".concat(_this.state.customer, "/orders")).then(function (response) {
+        _this.setState({
+          products: lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(response.data, function (product) {
+            product.stock = product.quantity;
+            product.order = 0;
+            return product;
+          })
+        });
+      }).catch(console.error).finally(function () {
+        _this.setState({
+          ordersLoading: false
+        });
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(Reorder, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var customerSearch = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Autocomplete"].TextField, {
+        onChange: this.searchCustomers,
+        label: "Customer",
+        value: this.state.inputText,
+        error: this.state.errors.customer_id,
+        prefix: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Icon"], {
+          source: "profile",
+          color: "inkLighter"
+        })
+      });
+      var dateOptions = [{
+        label: '30 Days',
+        value: '30'
+      }, {
+        label: '45 Days',
+        value: '45'
+      }, {
+        label: '60 Days',
+        value: '60'
+      }, {
+        label: '75 Days',
+        value: '75'
+      }, {
+        label: '90 Days',
+        value: '90'
+      }, {
+        label: '120 Days',
+        value: '120'
+      }];
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Page"], {
+        title: "Reorder"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Frame"], null, this.state.totalItems > 0 && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["ContextualSaveBar"], {
+        alignContentFlush: true,
+        message: this.state.totalItems + ' item(s) selected',
+        saveAction: {
+          content: 'Place Order',
+          onAction: function onAction() {
+            return console.log('Order');
+          }
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Card"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Card"].Section, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Layout"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Layout"].Section, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Autocomplete"], {
+        loading: this.state.customersLoading,
+        options: this.state.customerOptions,
+        selected: this.state.selectedCustomerName,
+        onSelect: this.customerSelected,
+        preferredPosition: "below",
+        textField: customerSearch
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Layout"].Section, {
+        secondary: true
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Select"], {
+        label: "Date range",
+        options: dateOptions,
+        onChange: this.dateRangeChanged,
+        value: this.state.dateRange
+      })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["ResourceList"], {
+        resourceName: {
+          singular: 'product',
+          plural: 'products'
+        },
+        items: this.state.products,
+        idForItem: function idForItem(item, index) {
+          return index;
+        },
+        loading: this.state.ordersLoading,
+        renderItem: function renderItem(item, index) {
+          var id = item.id,
+              title = item.title,
+              image = item.image,
+              sku = item.sku,
+              quantity = item.quantity,
+              stock = item.stock,
+              order = item.order;
+          var media = !lodash__WEBPACK_IMPORTED_MODULE_3___default.a.has(item, 'image') ? null : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Avatar"], {
+            size: "medium",
+            source: image
+          });
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["ResourceList"].Item, {
+            id: id,
+            media: media,
+            accessibilityLabel: "View details for ".concat(title)
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", {
+            className: "ProductListItem__Title"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextStyle"], {
+            variation: "strong"
+          }, title)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "ProductListItem__Sku"
+          }, sku), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"].Group, {
+            condensed: true
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
+            label: "Quantity",
+            value: quantity,
+            readOnly: true
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
+            label: "In Stock",
+            value: stock,
+            type: "number",
+            onChange: function onChange(value) {
+              return _this2.updateProduct(index, 'stock', value);
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
+            label: "Sold",
+            value: quantity - stock,
+            readOnly: true
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
+            label: "Order",
+            value: order,
+            type: "number",
+            onChange: function onChange(value) {
+              return _this2.updateProduct(index, 'order', value);
+            }
+          }))));
+        }
+      }))));
+    }
+  }]);
+
+  return Reorder;
+}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
+
+
 
 /***/ }),
 
