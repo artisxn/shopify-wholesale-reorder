@@ -95665,7 +95665,7 @@ function (_React$Component) {
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "dateRangeChanged", function (newRange) {
       _this.setState({
         dateRange: newRange
-      });
+      }, _this.getOrders);
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "customerSelected", function (updatedSelection) {
@@ -95761,7 +95761,11 @@ function (_React$Component) {
         ordersLoading: true
       });
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/customers/".concat(_this.state.customer, "/orders")).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/customers/".concat(_this.state.customer, "/orders"), {
+        params: {
+          dateRange: _this.state.dateRange
+        }
+      }).then(function (response) {
         _this.setState({
           products: lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(response.data, function (product) {
             product.stock = product.quantity;

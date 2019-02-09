@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use OhMyBrew\ShopifyApp\Facades\ShopifyApp;
 
@@ -21,13 +22,14 @@ class CustomerController extends Controller
         return $s_request->body->customers;
     }
 
-    public function orders($customer_id)
+    public function orders($customer_id, Request $request)
     {
         $shop = ShopifyApp::shop();
         $s_request = $shop->api()->rest('GET', "/admin/customers/$customer_id/orders.json", [
             'status' => 'any',
             'fields' => 'id,line_items',
-            'limit' => 5
+            'limit' => 250,
+	        'created_at_min' => Carbon::now()->subDays($request->get('dateRange', 60))->toAtomString()
         ]);
 
         $map = [];

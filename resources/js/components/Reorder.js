@@ -36,7 +36,7 @@ export default class Reorder extends React.Component {
     };
 
     dateRangeChanged = (newRange) => {
-        this.setState({dateRange: newRange});
+        this.setState({dateRange: newRange}, this.getOrders);
     };
 
     customerSelected = (updatedSelection) => {
@@ -235,7 +235,11 @@ export default class Reorder extends React.Component {
             ordersLoading: true
         });
 
-        axios.get(`/api/customers/${this.state.customer}/orders`)
+        axios.get(`/api/customers/${this.state.customer}/orders`, {
+                params: {
+                    dateRange: this.state.dateRange
+                }
+            })
             .then(response => {
                 this.setState({
                     products: _.map(response.data, (product) => {
