@@ -95928,22 +95928,22 @@ function (_React$Component) {
           }, sku), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"].Group, {
             condensed: true
           }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
-            label: "Quantity",
+            label: "Quantity Ordered",
             value: quantity,
             readOnly: true
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
-            label: "In Stock",
+            label: "Quantity In Stock",
             value: stock,
             type: "number",
             onChange: function onChange(value) {
               return _this2.updateProduct(index, 'stock', value);
             }
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
-            label: "Sold",
+            label: "Quantity Sold",
             value: quantity - stock,
             readOnly: true
           }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextField"], {
-            label: "Order",
+            label: "Quantity to Order",
             value: order,
             type: "number",
             onChange: function onChange(value) {

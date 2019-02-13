@@ -173,23 +173,23 @@ export default class Reorder extends React.Component {
                                     <FormLayout>
                                         <FormLayout.Group condensed>
                                             <TextField
-                                                label="Quantity"
+                                                label="Quantity Ordered"
                                                 value={quantity}
                                                 readOnly
                                             />
                                             <TextField
-                                                label="In Stock"
+                                                label="Quantity In Stock"
                                                 value={stock}
                                                 type="number"
                                                 onChange={(value) => (this.updateProduct(index, 'stock', value))}
                                             />
                                             <TextField
-                                                label="Sold"
+                                                label="Quantity Sold"
                                                 value={quantity-stock}
                                                 readOnly
                                             />
                                             <TextField
-                                                label="Order"
+                                                label="Quantity to Order"
                                                 value={order}
                                                 type="number"
                                                 onChange={(value) => (this.updateProduct(index, 'order', value))}
