@@ -220,7 +220,7 @@ export default class Reorder extends React.Component {
                 value: customers[customer].id,
                 id: customers[customer].id,
                 label: `${customers[customer].first_name} ${customers[customer].last_name}`
-                    + (customers[customer].note !== null && customers[customer].note !== '' ? ` (${customers[customer].note})` : '')
+                    + (customers[customer].note !== null && customers[customer].note !== '' ? ` - ${customers[customer].note}` : '')
             }
         }) ;
 

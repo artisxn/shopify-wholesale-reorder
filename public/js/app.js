@@ -95730,7 +95730,7 @@ function (_React$Component) {
         return {
           value: customers[customer].id,
           id: customers[customer].id,
-          label: "".concat(customers[customer].first_name, " ").concat(customers[customer].last_name) + (customers[customer].note !== null && customers[customer].note !== '' ? " (".concat(customers[customer].note, ")") : '')
+          label: "".concat(customers[customer].first_name, " ").concat(customers[customer].last_name) + (customers[customer].note !== null && customers[customer].note !== '' ? " - ".concat(customers[customer].note) : '')
         };
       });
 
