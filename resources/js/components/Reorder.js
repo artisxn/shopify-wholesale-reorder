@@ -252,11 +252,11 @@ export default class Reorder extends React.Component {
             })
             .then(response => {
                 this.setState({
-                    products: _.map(response.data, (product) => {
+                    products: _.sortBy(_.map(response.data, (product) => {
                         product.stock = product.quantity;
                         product.order = 0;
                         return product;
-                    }),
+                    }), ['title']),
                     totalItems: 0,
                     totalCost: 0.0
                 });

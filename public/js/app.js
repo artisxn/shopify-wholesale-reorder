@@ -95767,11 +95767,11 @@ function (_React$Component) {
         }
       }).then(function (response) {
         _this.setState({
-          products: lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(response.data, function (product) {
+          products: lodash__WEBPACK_IMPORTED_MODULE_3___default.a.sortBy(lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(response.data, function (product) {
             product.stock = product.quantity;
             product.order = 0;
             return product;
-          }),
+          }), ['title']),
           totalItems: 0,
           totalCost: 0.0
         });
