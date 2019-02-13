@@ -68,7 +68,7 @@ class CustomerController extends Controller
 
 
         $items->transform(function ($item) use ($products) {
-            if(isset($products[$item['id']]) && isset($products[$item['id']]->images)) {
+            if(isset($products[$item['id']]) && isset($products[$item['id']]->images) && isset($products[$item['id']]->images[0])) {
                 $item['image'] = $products[$item['id']]->images[0]->src;
             }
             if(isset($products[$item['id']]) && isset($products[$item['id']]->variants)) {
