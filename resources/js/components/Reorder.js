@@ -112,7 +112,7 @@ export default class Reorder extends React.Component {
                         alignContentFlush
                         message={
                             this.state.orderId === null
-                                ? this.state.totalItems + ' item(s). Total Cost: $' + this.state.totalCost
+                                ? this.state.totalItems + ' item(s)'
                                 : 'Order has been created as draft'
                         }
                         saveAction={{

@@ -12,6 +12,7 @@
     <title>{{ config('shopify-app.app_name') }}</title>
 
     @yield('styles')
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 
 <body>

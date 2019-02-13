@@ -95868,7 +95868,7 @@ function (_React$Component) {
         title: "Reorder"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Frame"], null, this.state.totalItems > 0 && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["ContextualSaveBar"], {
         alignContentFlush: true,
-        message: this.state.orderId === null ? this.state.totalItems + ' item(s). Total Cost: $' + this.state.totalCost : 'Order has been created as draft',
+        message: this.state.orderId === null ? this.state.totalItems + ' item(s)' : 'Order has been created as draft',
         saveAction: {
           loading: this.state.orderSaving,
           content: this.state.orderId === null ? 'Place Order' : 'Open Order',
