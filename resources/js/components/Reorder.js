@@ -152,8 +152,12 @@ export default class Reorder extends React.Component {
                         idForItem={(item, index) => index}
                         loading={this.state.ordersLoading}
                         renderItem={(item, index) => {
-                            const {id, title, image, sku, quantity, stock, order, tags} = item;
+                            const {id, title, image, sku, quantity, stock, order, tags, inventory_quantity} = item;
                             const media = !_.has(item, 'image') ? null : <Avatar size="medium" source={image} />;
+
+                            let inventory_badge_status = 'warning';
+                            if(inventory_quantity > 24) inventory_badge_status = 'attention';
+                            if(inventory_quantity > 49) inventory_badge_status = 'success';
 
                             return (
                                 <ResourceList.Item
@@ -163,12 +167,11 @@ export default class Reorder extends React.Component {
                                 >
                                     <h3 className="ProductListItem__Title">
                                         <TextStyle variation="strong">{title}</TextStyle>
-                                        {(_.includes(tags, 'PhaseOut') || _.includes(tags, 'Overstock')) &&
                                         <Stack>
                                             {_.includes(tags, 'PhaseOut') && <Badge status="warning">PhaseOut</Badge>}
                                             {_.includes(tags, 'Overstock') && <Badge status="warning">Overstock</Badge>}
+                                            <Badge status={inventory_badge_status}>Inventory {inventory_quantity}</Badge>
                                         </Stack>
-                                        }
                                     </h3>
                                     <div className="ProductListItem__Sku">{sku}</div>
                                     <FormLayout>

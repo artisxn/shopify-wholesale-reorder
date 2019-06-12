@@ -75,6 +75,9 @@ class CustomerController extends Controller
             if(isset($products[$item['id']]) && isset($products[$item['id']]->variants)) {
 	            $item['price'] = $products[ $item['id'] ]->variants[0]->price;
             }
+            if(isset($products[$item['id']]) && isset($products[$item['id']]->variants)) {
+	            $item['inventory_quantity'] = $products[ $item['id'] ]->variants[0]->inventory_quantity;
+            }
             if(isset($products[$item['id']]) && isset($products[$item['id']]->tags)) {
 	            $item['tags'] = explode(', ', $products[ $item['id'] ]->tags);
             }

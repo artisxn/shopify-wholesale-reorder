@@ -95909,11 +95909,15 @@ function (_React$Component) {
               quantity = item.quantity,
               stock = item.stock,
               order = item.order,
-              tags = item.tags;
+              tags = item.tags,
+              inventory_quantity = item.inventory_quantity;
           var media = !lodash__WEBPACK_IMPORTED_MODULE_3___default.a.has(item, 'image') ? null : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Avatar"], {
             size: "medium",
             source: image
           });
+          var inventory_badge_status = 'warning';
+          if (inventory_quantity > 24) inventory_badge_status = 'attention';
+          if (inventory_quantity > 49) inventory_badge_status = 'success';
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["ResourceList"].Item, {
             id: id,
             media: media,
@@ -95922,11 +95926,13 @@ function (_React$Component) {
             className: "ProductListItem__Title"
           }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["TextStyle"], {
             variation: "strong"
-          }, title), (lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'PhaseOut') || lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'Overstock')) && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Stack"], null, lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'PhaseOut') && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
+          }, title), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Stack"], null, lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'PhaseOut') && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
             status: "warning"
           }, "PhaseOut"), lodash__WEBPACK_IMPORTED_MODULE_3___default.a.includes(tags, 'Overstock') && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
             status: "warning"
-          }, "Overstock"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          }, "Overstock"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Badge"], {
+            status: inventory_badge_status
+          }, "Inventory ", inventory_quantity))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
             className: "ProductListItem__Sku"
           }, sku), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["FormLayout"].Group, {
             condensed: true
