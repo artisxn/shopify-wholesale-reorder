@@ -103,6 +103,7 @@ export default class Reorder extends React.Component {
             {label: '75 Days', value: '75'},
             {label: '90 Days', value: '90'},
             {label: '120 Days', value: '120'},
+            {label: 'All', value: '9999'},
         ];
 
         return <Page title="Reorder">

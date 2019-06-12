@@ -50,9 +50,10 @@ class CustomerController extends Controller
             }
         }
 
-        $items = collect($map);
+        unset($map['']);
 
-        $chunks = $items->chunk(100);
+        $items = collect($map);
+        $chunks = $items->chunk(50);
         $products = collect();
 
         foreach($chunks as $chunk) {

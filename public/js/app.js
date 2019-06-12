@@ -95863,6 +95863,9 @@ function (_React$Component) {
       }, {
         label: '120 Days',
         value: '120'
+      }, {
+        label: 'All',
+        value: '9999'
       }];
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_shopify_polaris__WEBPACK_IMPORTED_MODULE_0__["Page"], {
         title: "Reorder"
