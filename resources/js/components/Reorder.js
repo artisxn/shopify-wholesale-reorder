@@ -66,6 +66,7 @@ export default class Reorder extends React.Component {
         value = Math.max(parseInt(value), 0);
         if(isNaN(value)) value = 0;
 
+
         // noinspection FallThroughInSwitchStatementJS If stock is updated also update order quantity
         switch (property) {
             case 'stock':
@@ -73,7 +74,7 @@ export default class Reorder extends React.Component {
                 value = Math.max(0, product.quantity-value);
             case 'order':
                 prevValue = product.order;
-                product.order = realValue;
+                product.order = value;
                 break;
         }
         products[i] = product;
@@ -83,7 +84,7 @@ export default class Reorder extends React.Component {
         this.setState({
             products,
             totalItems: this.state.totalItems - prevValue + value,
-            totalCost: this.state.totalCost - ( prevValue * price) + (value * price)
+            totalCost: this.state.totalCost + (value * price) - (prevValue * price)
         });
     };
 
